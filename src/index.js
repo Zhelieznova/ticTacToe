@@ -5,5 +5,5 @@ import Game from './components/game/Game';
 
 ReactDOM.render(
   <Game />,
-  document.getElementById('root')
+  document.getElementById('root'),
 );
