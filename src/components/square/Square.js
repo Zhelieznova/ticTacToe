@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 export default class Square extends React.Component {
-    handleClick = (e) => {
-      console.log(e.target.value);
+    handleClick = () => {
       this.props.onClick();
     };
 
