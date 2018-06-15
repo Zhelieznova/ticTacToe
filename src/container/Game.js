@@ -1,26 +1,26 @@
 import React from 'react';
-import Board from '../board/Board';
-import calculateWinner from '../../utils/calculateWinner';
+import Board from '../components/board/Board';
+import calculateWinner from '../utils/calculateWinner';
 
 export default class Game extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      history: [{
-        squares: Array(9).fill(null),
-      }],
+      history: [
+        Array(9).fill(null),
+      ],
       stepNumber: 0,
       xIsNext: true,
     };
   }
 
   getWinner(current) {
-    const winner = calculateWinner(current.squares);
+    const winner = calculateWinner(current);
     let status;
     if (winner) {
       status = `Winner: ${winner}`;
-    } else if (current.squares.indexOf(null) === -1) {
+    } else if (current.indexOf(null) === -1) {
       status = 'Game is over. Try again';
     } else {
       status = `Next player: ${this.state.xIsNext ? 'X' : 'O'}`;
@@ -39,15 +39,13 @@ export default class Game extends React.Component {
   handleClick(i) {
     const historyMoves = this.state.history.slice(0, this.state.stepNumber + 1);
     const current = historyMoves[historyMoves.length - 1];
-    const squares = current.squares.slice();
+    const squares = current.slice();
     if (calculateWinner(squares) || squares[i]) {
       return;
     }
     squares[i] = this.state.xIsNext ? 'X' : 'O';
     this.setState({
-      history: historyMoves.concat([{
-        squares,
-      }]),
+      history: historyMoves.concat([squares]),
       stepNumber: historyMoves.length,
       xIsNext: !this.state.xIsNext,
     });
@@ -73,7 +71,7 @@ export default class Game extends React.Component {
       <div className="game">
         <div className="game-board">
           <Board
-            squares={current.squares}
+            squares={current}
             onClick={(i) => this.handleClick(i)}
           />
         </div>
